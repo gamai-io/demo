@@ -1,0 +1,41 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>gamAI - Evidence</title><style>
+:root{--bg:#0b0f14;--fg:#e6edf3;--mut:#8b98a5;--acc:#58a6ff;--ok:#3fb950;--card:#111820;--line:#1f2a37}
+*{box-sizing:border-box}body{margin:0;font:16px/1.55 system-ui,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--fg)}
+.wrap{max-width:900px;margin:0 auto;padding:48px 20px}h1{font-size:34px;margin:0 0 6px}h1 span{color:var(--acc)}
+.sub{color:var(--mut);margin:0 0 32px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin:18px 0 34px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px}.big{font-size:30px;font-weight:700}.big.ok{color:var(--ok)}.big.acc{color:var(--acc)}
+.lbl{color:var(--mut);font-size:13px;margin-top:4px}h2{font-size:20px;margin:34px 0 10px;border-bottom:1px solid var(--line);padding-bottom:6px}
+code,pre{font-family:ui-monospace,Menlo,monospace}pre{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px;overflow:auto}
+a{color:var(--acc);text-decoration:none}a:hover{text-decoration:underline}ul{padding-left:18px}li{margin:4px 0}
+.tag{display:inline-block;background:#16212e;color:var(--mut);border:1px solid var(--line);border-radius:999px;padding:2px 10px;font-size:12px;margin-right:6px}
+footer{color:var(--mut);font-size:13px;margin-top:40px;border-top:1px solid var(--line);padding-top:16px}
+</style></head><body><div class="wrap">
+<h1>gam<span>AI</span> - Evidence dashboard</h1>
+<p class="sub">Agent infrastructure that proves, guards, and remembers - <b>honest by construction</b>. Numbers below are measured, not projected.</p>
+<div class="grid">
+<div class="card"><div class="big acc">25,600</div><div class="lbl">cross-node claim-vs-truth trials (EuroHPC LUMI-C, 8 nodes)</div></div>
+<div class="card"><div class="big ok">0</div><div class="lbl">false-success on read / action / cross</div></div>
+<div class="card"><div class="big">6.25%</div><div class="lbl">dishonest claims flagged (1,600), verified per probe</div></div>
+<div class="card"><div class="big">2.4 ms</div><div class="lbl">median probe latency (p95 10.8 ms)</div></div>
+</div>
+<h2>Install (offline, no keys)</h2>
+<pre>pip install gamai-trust
+gamai-trust demo     # proofgate + agent-immunity + crossnode, one JSON
+
+pip install gamai-guard        # multilingual injection guard
+pip install sigil-profile      # proof-carrying execution (SIGIL/1)</pre>
+<h2>Reproduce the 25,600-trial run</h2>
+<pre># LUMI-C, 8 heterogeneous nodes, CPU only (~0 GPU-h)
+sbatch --partition=standard --nodes=8 --export=ALL,RUNS=200 sbatch-f2-crossnode.sh
+# 25,600 trials | pass 93.75% | false-success 6.25% | 0 on read/action/cross</pre>
+<h2>What each repo proves</h2>
+<ul>
+<li><a href="https://github.com/gamai-io/gamai-trust">gamai-trust</a> - verify claims, remember refusals, score false success.</li>
+<li><a href="https://github.com/gamai-io/sigil">sigil</a> - proof-carrying execution profile (grants to receipts to anchor).</li>
+<li><a href="https://github.com/gamai-io/crossnode-bench">crossnode-bench</a> - measure agent honesty across heterogeneous nodes.</li>
+<li><a href="https://github.com/gamai-io/gamai-guard">gamai-guard</a> - multilingual prompt-injection guard (29/30 blocked, 0/10 FP).</li>
+</ul>
+<h2>Honest limits</h2>
+<ul><li>v0.x. The trust layer <b>reports</b> state; it does not make an agent honest.</li><li>Every repo ships <code>repro.sh</code> - verify it yourself. We publish evidence, not slides.</li></ul>
+<footer><span class="tag">Apache-2.0</span><span class="tag">Validated on EuroHPC LUMI</span> &nbsp; <a href="https://github.com/gamai-io">github.com/gamai-io</a> &nbsp; <a href="https://pypi.org/project/gamai-trust/">PyPI</a></footer>
+</div></body></html>
