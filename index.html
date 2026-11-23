@@ -13,10 +13,10 @@ footer{color:var(--mut);font-size:13px;margin-top:40px;border-top:1px solid var(
 <h1>gam<span>AI</span> - Evidence dashboard</h1>
 <p class="sub">Agent infrastructure that proves, guards, and remembers - <b>honest by construction</b>. Numbers below are measured, not projected.</p>
 <div class="grid">
-<div class="card"><div class="big acc">25,600</div><div class="lbl">cross-node claim-vs-truth trials (EuroHPC LUMI-C, 8 nodes)</div></div>
-<div class="card"><div class="big ok">0</div><div class="lbl">false-success on read / action / cross</div></div>
-<div class="card"><div class="big">6.25%</div><div class="lbl">dishonest claims flagged (1,600), verified per probe</div></div>
-<div class="card"><div class="big">2.4 ms</div><div class="lbl">median probe latency (p95 10.8 ms)</div></div>
+<div class="card"><div class="big ok">0</div><div class="lbl">false successes missed: honest run and controlled-liar run (v1.4.0)</div></div>
+<div class="card"><div class="big acc">25,600</div><div class="lbl">honest fleet &middot; 16 tasks &times; 200 rounds, 8 Vultr nodes + Contabo &mdash; 25,600/25,600 pass</div></div>
+<div class="card"><div class="big acc">28,800</div><div class="lbl">with one controlled <code>MockLiar</code> node &mdash; 28,400/28,800 pass; <b>400 false successes, all 400 on the lying node</b></div></div>
+<div class="card"><div class="big">1.39%</div><div class="lbl">false-success share in the liar run &mdash; the gate counted them as failures, it did not pass them</div></div>
 </div>
 <h2>Install (offline, no keys)</h2>
 <pre>pip install gamai-trust
@@ -24,10 +24,16 @@ gamai-trust demo     # proofgate + agent-immunity + crossnode, one JSON
 
 pip install gamai-guard        # multilingual injection guard
 pip install sigil-profile      # proof-carrying execution (SIGIL/1)</pre>
-<h2>Reproduce the 25,600-trial run</h2>
-<pre># LUMI-C, 8 heterogeneous nodes, CPU only (~0 GPU-h)
-sbatch --partition=standard --nodes=8 --export=ALL,RUNS=200 sbatch-f2-crossnode.sh
-# 25,600 trials | pass 93.75% | false-success 6.25% | 0 on read/action/cross</pre>
+<h2>What the numbers come from (crossnode-bench v1.4.0, shipped)</h2>
+<pre># honest fleet: Contabo + 8x Vultr vc2-1c-1gb, 16 tasks x 200 rounds
+#   25,600 records, 25,600/25,600 pass, 0 false successes
+#
+# controlled liar: same fleet + one MockLiar wrapper on vultr-lax
+#   28,800 records, 28,400/28,800 pass (98.61%), 400 false successes (1.39%)
+#   all 400 on the lying node -> detected, not passed
+#   artifact: liar/evidence.jsonl.gz sha256 372851594aae1ee5... (see RELEASE_v1.4.0.md)
+#
+# reproduce: crossnode-bench repo, README + repro.sh</pre>
 <h2>What each repo proves</h2>
 <ul>
 <li><a href="https://github.com/gamai-io/gamai-trust">gamai-trust</a> - verify claims, remember refusals, score false success.</li>
@@ -36,6 +42,6 @@ sbatch --partition=standard --nodes=8 --export=ALL,RUNS=200 sbatch-f2-crossnode.
 <li><a href="https://github.com/gamai-io/gamai-guard">gamai-guard</a> - multilingual prompt-injection guard (29/30 blocked, 0/10 FP).</li>
 </ul>
 <h2>Honest limits</h2>
-<ul><li>v0.x. The trust layer <b>reports</b> state; it does not make an agent honest.</li><li>Every repo ships <code>repro.sh</code> - verify it yourself. We publish evidence, not slides.</li></ul>
+<ul><li>v0.x. The trust layer <b>reports</b> state; it does not make an agent honest.</li><li>Every repo ships <code>repro.sh</code> - verify it yourself. We publish evidence, not slides.</li><li>Numbers on this page were re-checked on 2026-11-23 against the release files named above; the earlier version mixed the two 25,600 runs and is corrected here.</li></ul>
 <footer><span class="tag">Apache-2.0</span><span class="tag">Validated on EuroHPC LUMI</span> &nbsp; <a href="https://github.com/gamai-io">github.com/gamai-io</a> &nbsp; <a href="https://pypi.org/project/gamai-trust/">PyPI</a></footer>
 </div></body></html>

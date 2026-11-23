@@ -7,10 +7,21 @@ Static, dependency-free dashboard that publishes the **measured** evidence behin
 
 ## What it shows
 
-- **25,600** cross-node claim-vs-truth trials (EuroHPC LUMI-C, 8 nodes, CPU only)
-- **0** false-success on read / action / cross
-- **6.25%** dishonest claims flagged (1,600), verified per probe
-- **2.4 ms** median probe latency (p95 10.8 ms)
+All figures below are from **crossnode-bench v1.4.0**, which ships the record files and hashes.
+
+| Run | Setup | Result |
+|---|---|---|
+| Honest fleet | 16 tasks x 200 rounds, 8 Vultr `vc2-1c-1gb` + Contabo | 25,600/25,600 pass (100%), **0** false successes |
+| Controlled liar | same fleet + one `MockLiar` wrapper on `vultr-lax` | 28,800 records, 28,400/28,800 pass (98.61%), **400 false successes (1.39%) — all 400 on the lying node** |
+
+The second run is a *detection* test: the benchmark counted the liar's claims as false
+successes, it did not pass them. Artifact: `liar/evidence.jsonl.gz`
+sha256 `372851594aae1ee554a46b817a0c466fad3edda4f3e9a0ecff2df9a081789674`.
+
+**Correction 2026-11-23.** The page used to show "25,600 trials (LUMI-C) / pass 93.75% /
+6.25% flagged", which merged an honest-fleet total with a separate 25,600-trial Slurm run
+(200 runs x 16 tasks x 8 nodes). That Slurm run is reported in `evidence-gate-runtime`
+but its dataset is **not public yet**, so it is no longer shown as evidence here.
 
 ## Reproduce
 
