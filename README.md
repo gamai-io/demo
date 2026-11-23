@@ -29,9 +29,9 @@ but its dataset is **not public yet**, so it is no longer shown as evidence here
 pip install gamai-trust
 gamai-trust demo        # proofgate + agent-immunity + crossnode, one JSON
 
-# 25,600-trial run (LUMI-C, ~0 GPU-h):
-sbatch --partition=standard --nodes=8 --export=ALL,RUNS=200 sbatch-f2-crossnode.sh
-# 25,600 trials | pass 93.75% | false-success 6.25% | 0 on read/action/cross
+# shipped run (crossnode-bench v1.4.0): honest fleet 25,600/25,600, 0 false successes
+# controlled liar variant: 28,800 records, 400 false successes, all on the MockLiar node
+# reproduce: see crossnode-bench README + repro.sh (that repo ships the records)
 ```
 
 ## Repos
