@@ -1,0 +1,32 @@
+name: verify
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      # The page is generated from these files only; the release tag keeps the
+      # bytes stable, and render.py re-checks every sha256 against PINNED.
+      - name: Fetch crossnode-bench v1.4.0 result files
+        run: |
+          git clone --quiet --depth 1 --branch v1.4.0 \
+            https://github.com/gamai-io/crossnode-bench.git "$RUNNER_TEMP/crossnode-bench"
+
+      - name: Regenerate into memory and compare with the committed page
+        run: |
+          python3 render.py --check \
+            --artifacts "$RUNNER_TEMP/crossnode-bench/results/vultr-fleet-2026-11-09-200"
