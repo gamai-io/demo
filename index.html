@@ -27,6 +27,7 @@ pip install sigil-profile      # proof-carrying execution (SIGIL/1)</pre>
 <h2>What the numbers come from (crossnode-bench v1.4.0, shipped)</h2>
 <pre># honest fleet: Contabo + 8x Vultr vc2-1c-1gb, 16 tasks x 200 rounds
 #   25,600 records, 25,600/25,600 pass, 0 false successes
+#   the 400 P1/P2 probes ran on the local node; the 8 Vultr HTTP nodes ran read/action
 #
 # controlled liar: same fleet + one MockLiar wrapper on vultr-lax
 #   28,800 records, 28,400/28,800 pass (98.61%), 400 false successes (1.39%)
@@ -42,6 +43,6 @@ pip install sigil-profile      # proof-carrying execution (SIGIL/1)</pre>
 <li><a href="https://github.com/gamai-io/gamai-guard">gamai-guard</a> - multilingual prompt-injection guard (29/30 blocked, 0/10 FP).</li>
 </ul>
 <h2>Honest limits</h2>
-<ul><li>v0.x. The trust layer <b>reports</b> state; it does not make an agent honest.</li><li>Every repo ships <code>repro.sh</code> - verify it yourself. We publish evidence, not slides.</li><li>Numbers on this page were re-checked on 2026-11-23 against the release files named above; the earlier version mixed the two 25,600 runs and is corrected here.</li></ul>
+<ul><li>v0.x. The trust layer <b>reports</b> state; it does not make an agent honest.</li><li>Repositories that ship a <code>repro.sh</code> publish one you can run; the rest name the release file and its sha256. We publish evidence, not slides.</li><li>Numbers on this page were re-checked on 2026-11-23 against the release files named above; the earlier version mixed the two 25,600 runs and is corrected here.</li></ul>
 <footer><span class="tag">Apache-2.0</span><span class="tag">Validated on EuroHPC LUMI</span> &nbsp; <a href="https://github.com/gamai-io">github.com/gamai-io</a> &nbsp; <a href="https://pypi.org/project/gamai-trust/">PyPI</a></footer>
 </div></body></html>

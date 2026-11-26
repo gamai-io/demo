@@ -11,7 +11,7 @@ All figures below are from **crossnode-bench v1.4.0**, which ships the record fi
 
 | Run | Setup | Result |
 |---|---|---|
-| Honest fleet | 16 tasks x 200 rounds, 8 Vultr `vc2-1c-1gb` + Contabo | 25,600/25,600 pass (100%), **0** false successes |
+| Honest fleet | 16 tasks x 200 rounds, 8 Vultr `vc2-1c-1gb` + Contabo | 25,600/25,600 pass (100%), **0** false successes (P1/P2 probes require an adapter and ran on the local node only) |
 | Controlled liar | same fleet + one `MockLiar` wrapper on `vultr-lax` | 28,800 records, 28,400/28,800 pass (98.61%), **400 false successes (1.39%) — all 400 on the lying node** |
 
 The second run is a *detection* test: the benchmark counted the liar's claims as false
